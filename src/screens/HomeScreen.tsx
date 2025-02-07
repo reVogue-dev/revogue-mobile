@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Button, StyleSheet, Text} from 'react-native';
 
-export const HomeScreen = ({navigation}) => {
+export const HomeScreen = ({navigation}: any) => {
   return (
     <View style={styles.container}>
       <Button
