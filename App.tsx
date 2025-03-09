@@ -3,13 +3,16 @@ import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {store} from './src/redux/store';
 import AppNavigator from './src/navigations/AppNavigator';
+import {PaperProvider} from 'react-native-paper';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <PaperProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </PaperProvider>
     </Provider>
   );
 };
