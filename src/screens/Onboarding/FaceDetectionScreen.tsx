@@ -18,7 +18,7 @@ export const FaceDetectionScreen = ({navigation}: any) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container}></ScrollView>
-
+      {/*  */}
       {/* Bottom Button */}
       <BottomButton buttonText="Next" onPress={handleNextPress} />
     </SafeAreaView>
