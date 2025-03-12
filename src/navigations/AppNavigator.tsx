@@ -8,6 +8,11 @@ import {OtpScreen} from '../screens/Login/OtpScreen';
 import {OnBoardingScreen} from '../screens/Onboarding/OnboardingScreen';
 import Colors from '../Utilities/constants/colors';
 import {FaceDetectionScreen} from '../screens/Onboarding/FaceDetectionScreen';
+import BodyTypeScreen from '../screens/Onboarding/BodyTypeScreen';
+import {HeightScreen} from '../screens/Onboarding/HeightScreen';
+import {WeightScreen} from '../screens/Onboarding/WeightScreen';
+import {SkinToneScreen} from '../screens/Onboarding/SkinToneScreen';
+import ProfessionScreen from '../screens/Onboarding/ProfessionScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,19 +40,50 @@ const AppNavigator = () => {
       <Stack.Screen
         name="Onboarding"
         component={OnBoardingScreen}
-        options={{
-          title: "Let's Create Structure",
-          headerTitleStyle: {color: Colors.primary},
-        }}
+        // options={{
+        //   title: "Let's Create Structure",
+        //   headerTitleStyle: {color: Colors.primary},
+        // }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
+        name="FaceDetection"
+        component={FaceDetectionScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BodyType"
+        component={BodyTypeScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Height"
+        component={HeightScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Weight"
+        component={WeightScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Skin"
+        component={SkinToneScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Profession"
+        component={ProfessionScreen}
+        options={{headerShown: false}}
+      />
+      {/* <Stack.Screen
         name="FaceDetection"
         component={FaceDetectionScreen}
         options={{
           title: "Harpreet's Body Structure",
           headerTitleStyle: {color: Colors.primary},
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Fontisto'; // Import Fontisto icons
 import Colors from '../../Utilities/constants/colors';
 import BottomButton from '../../components/Common/BottomButton';
+import CustomHeader from '../../components/Common/CustomHeader';
 
 export const OnBoardingScreen = ({navigation}: any) => {
   const [name, setName] = useState('');
@@ -26,6 +27,10 @@ export const OnBoardingScreen = ({navigation}: any) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <CustomHeader
+        title="Let's Create Structure"
+        onBackPress={() => navigation.goBack()}
+      />
       <ScrollView style={styles.container}>
         <View style={styles.formContainer}>
           {/* Name Field */}

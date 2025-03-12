@@ -40,6 +40,7 @@ export const LandingScreen = ({navigation}: any) => {
           <TouchableOpacity
             style={styles.primaryButton}
             onPress={() => {
+              navigation.navigate('Onboarding');
               console.log('Looking around...');
             }}>
             <Text style={styles.buttonText}>I’ll look around first</Text>
