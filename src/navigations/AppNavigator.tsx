@@ -13,6 +13,7 @@ import {HeightScreen} from '../screens/Onboarding/HeightScreen';
 import {WeightScreen} from '../screens/Onboarding/WeightScreen';
 import {SkinToneScreen} from '../screens/Onboarding/SkinToneScreen';
 import ProfessionScreen from '../screens/Onboarding/ProfessionScreen';
+import CreateAccountScreen from '../screens/Onboarding/CreateAccountScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,6 +75,11 @@ const AppNavigator = () => {
       <Stack.Screen
         name="Profession"
         component={ProfessionScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Account"
+        component={CreateAccountScreen}
         options={{headerShown: false}}
       />
       {/* <Stack.Screen
