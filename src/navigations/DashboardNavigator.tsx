@@ -3,10 +3,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ProfileScreen} from '../screens/Login/ProfileScreen';
 import {ServicesScreen} from '../screens/Dashboard/ServicesScreen';
 import Feather from 'react-native-vector-icons/Feather';
-import {WardrobeScreen} from '../screens/Dashboard/WardrobeScreen';
 import {FeedScreen} from '../screens/Dashboard/FeedScreen';
 import {CaptureScreen} from '../screens/Dashboard/CaptureScreen';
-import DashboardScreen from '../screens/Dashboard/DashboardScreen';
+import WardrobeScreen from '../screens/Dashboard/WardrobeScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +38,7 @@ const DashboardNavigator = () => {
       />
       <Tab.Screen
         name="Wardrobe"
-        component={DashboardScreen}
+        component={WardrobeScreen}
         options={{
           tabBarIcon: ({color, size}) => (
             <Feather name="grid" color={color} size={size} />
