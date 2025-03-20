@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import BottomButton from '../../components/Common/BottomButton';
-import {useNavigation} from '@react-navigation/native';
 
 const ProfileField = ({label, value}: any) => (
   <View style={styles.fieldContainer}>
@@ -42,7 +41,7 @@ const CreateAccountScreen = ({navigation}: any) => {
 
           <View style={styles.avatarContainer}>
             <Image
-              source={require('../../assets/avatar.svg')}
+              source={require('../../assets/images/avatar.svg')}
               style={styles.avatar}
             />
             <TouchableOpacity style={styles.editIconContainer}>

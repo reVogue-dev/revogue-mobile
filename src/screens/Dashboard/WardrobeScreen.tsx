@@ -15,7 +15,9 @@ const WardrobeCard = ({title, count, iconName}: any) => (
   <TouchableOpacity style={styles.card}>
     <Icon name={iconName} size={24} color="#000" />
     <View style={styles.countContainer}>
-      <Text style={styles.cardTitle}>{title}</Text>
+      <Text numberOfLines={2} allowFontScaling={false} style={styles.cardTitle}>
+        {title}
+      </Text>
       <Text style={styles.cardCount}>{count}</Text>
     </View>
 
@@ -30,22 +32,31 @@ export default function WardrobeScreen() {
 
   // Tab content components
   const renderSectionsContent = () => (
-    <View style={styles.grid}>
-      <WardrobeCard title="Jacket Coats" count="0" iconName="hanger" />
-      <WardrobeCard title="Suit Blazers" count="0" iconName="tie" />
-      <WardrobeCard title="Dangle Skirts" count="0" iconName="skirt" />
-      <WardrobeCard title="Shorts" count="0" iconName="shorts" />
-      <WardrobeCard title="Knitwear" count="0" iconName="knitting" />
-      <WardrobeCard title="Blouses Shirts" count="0" iconName="tshirt-crew" />
-    </View>
+    <>
+      <View style={styles.grid}>
+        <WardrobeCard title="Jacket Coats" count="0" iconName="hanger" />
+        <WardrobeCard title="Suit Blazers" count="0" iconName="tie" />
+        <WardrobeCard title="Dangle Skirts" count="0" iconName="skirt" />
+        <WardrobeCard title="Shorts" count="0" iconName="shorts" />
+        <WardrobeCard title="Knitwear" count="0" iconName="knitting" />
+        <WardrobeCard title="Blouses Shirts" count="0" iconName="tshirt-crew" />
+      </View>
+      <View style={styles.createContainer}>
+        <Text style={styles.create}>Create Your Wardrobe </Text>
+        <Text style={styles.createDescription}>
+          It’s time for a closet evaluation. Pull out all your clothes (yes, all
+          your clothes!) and lay them all out. Go piece by piece and sort your
+          clothes into four piles{' '}
+        </Text>
+      </View>
+    </>
   );
 
   const renderKitsContent = () => (
     <View style={styles.grid}>
-      <Text style={styles.emptyStateText}>No kits created yet</Text>
-      <TouchableOpacity style={styles.createButton}>
-        <Text style={styles.createButtonText}>Create a Kit</Text>
-      </TouchableOpacity>
+      <WardrobeCard title="To Work" count="0" iconName="hanger" />
+      <WardrobeCard title="Business Meetings" count="0" iconName="tie" />
+      <WardrobeCard title="To Party" count="0" iconName="tie" />
     </View>
   );
 
@@ -105,24 +116,14 @@ export default function WardrobeScreen() {
       </View>
 
       {/* Content based on active tab */}
-      <ScrollView style={styles.scrollView}>
-        {renderContent()}
-        <View style={styles.createContainer}>
-          <Text style={styles.create}>Create Your Wardrobe </Text>
-          <Text style={styles.createDescription}>
-            It’s time for a closet evaluation. Pull out all your clothes (yes,
-            all your clothes!) and lay them all out. Go piece by piece and sort
-            your clothes into four piles{' '}
-          </Text>
-        </View>
-      </ScrollView>
+      <ScrollView style={styles.scrollView}>{renderContent()}</ScrollView>
 
       <View style={styles.bottomTextContainer}>
         <Divider
           style={{width: '100%', height: 1, backgroundColor: Colors.lightGray}}
         />
         <Text style={styles.bottomText}>
-          Update Your Profile to continue,{' '}
+          Update Your Profile to continue,&nbsp;
           <Text style={styles.addDetailsText}>Add Details</Text>
         </Text>
       </View>
@@ -193,9 +194,9 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '28%',
-    height: 20,
-    padding: 8,
     aspectRatio: 1,
+    // height: 20,
+    padding: 8,
     position: 'relative',
     borderWidth: 1,
     borderColor: '#ccc',
