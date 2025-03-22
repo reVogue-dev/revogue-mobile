@@ -6,13 +6,14 @@ import {LandingScreen} from '../screens/LandingScreen';
 import {LoginDifferent} from '../screens/Login/LoginDifferent';
 import {OtpScreen} from '../screens/Login/OtpScreen';
 import {OnBoardingScreen} from '../screens/Onboarding/OnboardingScreen';
-import Colors from '../Utilities/constants/colors';
 import {FaceDetectionScreen} from '../screens/Onboarding/FaceDetectionScreen';
 import BodyTypeScreen from '../screens/Onboarding/BodyTypeScreen';
 import {HeightScreen} from '../screens/Onboarding/HeightScreen';
 import {WeightScreen} from '../screens/Onboarding/WeightScreen';
 import {SkinToneScreen} from '../screens/Onboarding/SkinToneScreen';
 import ProfessionScreen from '../screens/Onboarding/ProfessionScreen';
+import CreateAccountScreen from '../screens/Onboarding/CreateAccountScreen';
+import DashboardNavigator from './DashboardNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,11 @@ const AppNavigator = () => {
       />
 
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Dashboard"
+        component={DashboardNavigator} // Add the Bottom Tab Navigator
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen
         name="Onboarding"
@@ -74,6 +80,11 @@ const AppNavigator = () => {
       <Stack.Screen
         name="Profession"
         component={ProfessionScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Account"
+        component={CreateAccountScreen}
         options={{headerShown: false}}
       />
       {/* <Stack.Screen

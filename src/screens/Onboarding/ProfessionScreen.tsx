@@ -52,7 +52,7 @@ const socialAccounts = [
 
 const ProfessionScreen = ({navigation}: any) => {
   const handleNextPress = () => {
-    navigation.navigate('Skin');
+    navigation.navigate('Account');
   };
 
   const renderOptions = (data: string[]) => (
@@ -125,18 +125,18 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 14,
     marginBottom: 20,
   },
   optionsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   optionBox: {
     width: '30%',
-    height: 60,
+    height: 40,
     backgroundColor: '#E0E0E0',
     borderRadius: 10,
     alignItems: 'center',
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 14,
     marginBottom: 5,
   },
   cardDescription: {

@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-export const ProfileScreen = ({route}: any) => {
+export const CaptureScreen = ({route}: any) => {
   return (
     <View style={styles.container}>
-      <Text>This is profile screen</Text>
+      <Text>This is Capture's screen</Text>
     </View>
   );
 };
