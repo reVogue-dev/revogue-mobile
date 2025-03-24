@@ -11,8 +11,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../Utilities/constants/colors';
 import {Divider} from 'react-native-paper';
 
-const WardrobeCard = ({title, count, iconName}: any) => (
-  <TouchableOpacity style={styles.card}>
+const WardrobeCard = ({title, count, iconName, onPress}: any) => (
+  <TouchableOpacity style={styles.card} onPress={onPress}>
     <Icon name={iconName} size={24} color="#000" />
     <View style={styles.countContainer}>
       <Text numberOfLines={2} allowFontScaling={false} style={styles.cardTitle}>
@@ -27,19 +27,55 @@ const WardrobeCard = ({title, count, iconName}: any) => (
   </TouchableOpacity>
 );
 
-export default function WardrobeScreen() {
+export default function WardrobeScreen({navigation}: any) {
   const [activeTab, setActiveTab] = useState('SECTIONS');
+
+  const handleCardPress = (title: string) => {
+    navigation.navigate('Closet', {title});
+    console.log(`Card pressed: ${title}`);
+    // Navigate or perform any action
+  };
 
   // Tab content components
   const renderSectionsContent = () => (
     <>
       <View style={styles.grid}>
-        <WardrobeCard title="Jacket Coats" count="0" iconName="hanger" />
-        <WardrobeCard title="Suit Blazers" count="0" iconName="tie" />
-        <WardrobeCard title="Dangle Skirts" count="0" iconName="skirt" />
-        <WardrobeCard title="Shorts" count="0" iconName="shorts" />
-        <WardrobeCard title="Knitwear" count="0" iconName="knitting" />
-        <WardrobeCard title="Blouses Shirts" count="0" iconName="tshirt-crew" />
+        <WardrobeCard
+          title="Jacket Coats"
+          count="0"
+          iconName="hanger"
+          onPress={() => handleCardPress('Jacket Coats')}
+        />
+        <WardrobeCard
+          title="Suit Blazers"
+          count="0"
+          iconName="tie"
+          onPress={() => handleCardPress('Suit Blazers')}
+        />
+        <WardrobeCard
+          title="Dangle Skirts"
+          count="0"
+          iconName="skirt"
+          onPress={() => handleCardPress('Dangle Skirts')}
+        />
+        <WardrobeCard
+          title="Shorts"
+          count="0"
+          iconName="shorts"
+          onPress={() => handleCardPress('Shorts')}
+        />
+        <WardrobeCard
+          title="Knitwear"
+          count="0"
+          iconName="knitting"
+          onPress={() => handleCardPress('Knitwear')}
+        />
+        <WardrobeCard
+          title="Blouses Shirts"
+          count="0"
+          iconName="tshirt-crew"
+          onPress={() => handleCardPress('Blouses Shirts')}
+        />
       </View>
       <View style={styles.createContainer}>
         <Text style={styles.create}>Create Your Wardrobe </Text>
@@ -194,7 +230,8 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '28%',
-    aspectRatio: 1,
+    // aspectRatio: 1,
+    height: 120, // Increased height
     // height: 20,
     padding: 8,
     position: 'relative',

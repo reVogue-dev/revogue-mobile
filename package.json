@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^8.3.0",
     "@react-navigation/bottom-tabs": "^7.2.1",
     "@react-navigation/drawer": "^7.1.1",
     "@react-navigation/material-top-tabs": "^7.2.1",
@@ -23,6 +24,7 @@
     "react-native-date-picker": "^5.0.10",
     "react-native-gesture-handler": "^2.24.0",
     "react-native-image-picker": "^8.2.0",
+    "react-native-modal-datetime-picker": "^18.0.0",
     "react-native-otp-inputs": "^7.4.0",
     "react-native-pager-view": "^6.7.0",
     "react-native-paper": "^5.13.1",
@@ -30,6 +32,7 @@
     "react-native-safe-area-context": "^5.3.0",
     "react-native-screens": "^4.9.2",
     "react-native-tab-view": "^4.0.6",
+    "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.2.0",
     "react-native-vision-camera": "^4.6.4",
     "react-redux": "^9.2.0"

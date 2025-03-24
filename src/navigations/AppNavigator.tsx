@@ -14,6 +14,7 @@ import {SkinToneScreen} from '../screens/Onboarding/SkinToneScreen';
 import ProfessionScreen from '../screens/Onboarding/ProfessionScreen';
 import CreateAccountScreen from '../screens/Onboarding/CreateAccountScreen';
 import DashboardNavigator from './DashboardNavigator';
+import ClosetScreen from '../screens/Dashboard/ClosetScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -87,14 +88,16 @@ const AppNavigator = () => {
         component={CreateAccountScreen}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="FaceDetection"
-        component={FaceDetectionScreen}
-        options={{
-          title: "Harpreet's Body Structure",
-          headerTitleStyle: {color: Colors.primary},
-        }}
-      /> */}
+      <Stack.Screen
+        name="Closet"
+        component={ClosetScreen}
+        options={{headerShown: false}}
+
+        // options={{
+        //   title: "Today's Closet",
+        //   headerTitleStyle: {color: Colors.primary},
+        // }}
+      />
     </Stack.Navigator>
   );
 };
