@@ -1,15 +1,51 @@
-// store/store.ts
-import {configureStore} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit'
 
-// Example slice (you can add more slices as needed)
-import exampleSlice from './slices/exampleSlice';
+import {
+    persistStore,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER, persistCombineReducers,
+} from 'redux-persist'
 
-export const store = configureStore({
-  reducer: {
-    example: exampleSlice, // Add your reducers here
-  },
-});
+import storage from 'redux-persist/lib/storage'
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+
+import rootReducer from './reducers'
+
+
+
+const config = {
+    key: 'root',
+    storage: storage,
+    version: 1,
+    debug: true,
+    whitelist: ['auth'],
+    stateReconciler: autoMergeLevel2
+};
+
+
+
+const persistedReducer = persistCombineReducers(config, rootReducer);
+
+
+
+const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
+})
+
+
+
+let persistor = persistStore(store)
+export {
+    store, persistor
+}
