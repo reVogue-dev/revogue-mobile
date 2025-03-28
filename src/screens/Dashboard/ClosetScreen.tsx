@@ -16,20 +16,19 @@ import {
 import CustomHeader from '../../components/Common/CustomHeader';
 import Colors from '../../Utilities/constants/colors';
 import Feather from 'react-native-vector-icons/Feather';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 // Assuming CustomHeader is imported from your components directory
 
 const ClosetScreen = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState('casual');
-  const [showPicker, setShowPicker] = useState(false);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
+    console.log(isDatePickerVisible);
   };
 
   const hideDatePicker = () => {
@@ -43,6 +42,13 @@ const ClosetScreen = ({navigation}: any) => {
 
   const handleTabPress = (tab: any) => {
     setActiveTab(tab);
+  };
+
+  const handleDateChange = (event: Event, date?: Date) => {
+    hideDatePicker();
+    if (date) {
+      setSelectedDate(date);
+    }
   };
 
   const openLink = () => {
@@ -89,17 +95,14 @@ const ClosetScreen = ({navigation}: any) => {
           onCancel={hideDatePicker}
         /> */}
 
-        {Platform.OS === 'android' && showPicker && (
-          <RNDateTimePicker
+        {isDatePickerVisible && (
+          <DateTimePicker
+            testID="datePicker"
             value={selectedDate}
             mode="date"
+            is24Hour={true}
             display="default"
-            onChange={(event, date) => {
-              setShowPicker(false);
-              if (date) {
-                setSelectedDate(date);
-              }
-            }}
+            onChange={handleDateChange}
           />
         )}
       </View>
