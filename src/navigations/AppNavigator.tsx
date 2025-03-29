@@ -30,6 +30,7 @@ import {
   ROUTE_PROFILE_FACE_DETECTOR,
   ROUTE_PROFILE_ONBOARDING,
 } from '../Utilities/constants/api-routes';
+import ClosetScreen from '../screens/Dashboard/ClosetScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -103,7 +104,7 @@ const AppNavigator = () => {
         component={CreateAccountScreen}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Closet"
         component={ClosetScreen}
         options={{headerShown: false}}
@@ -112,7 +113,7 @@ const AppNavigator = () => {
         //   title: "Today's Closet",
         //   headerTitleStyle: {color: Colors.primary},
         // }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };
