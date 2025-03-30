@@ -1,66 +1,71 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { APIClient } from "../../Utilities/server/api-client";
-import { API_LOGIN } from "../../Utilities/constants/api-routes";
-
+import { API_OTP_GENERATE } from "../../Utilities/constants/api-routes";
+import * as Keychain from 'react-native-keychain';
 
 const config = {
   name: "auth",
 };
+
+// Function to save token securely
+const saveToken = async (token: string) => {
+  await Keychain.setGenericPassword("authToken", token);
+};
+
+
+
+// Function to remove token securely
+const removeToken = async () => {
+  await Keychain.resetGenericPassword();
+};
+
 export const getLoginOTP: any = createAsyncThunk(
   `${config.name}/getLoginOTP`,
-  async (data:any) => {
-     const response= await APIClient.post(API_LOGIN,data);
-     return response.data.data; 
+  async (params: any) => {
+    const response = await APIClient.post(API_OTP_GENERATE, { params });
+    return response.data.data;
   }
 );
-
-
-
-//CRUD
 
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
     otpDetails: null,
-    loader:false,
-    userDetails:null as any
+    loader: false,
+    userDetails: null as any,
+    token: null,
   },
   reducers: {
     resetOTP: (state) => {
       state.otpDetails = null;
     },
-    setDetails:(state,payload)=>{
-      state.userDetails = payload?.payload;
+    setDetails: (state, action) => {
+      state.userDetails = action.payload;
+    },
+    setToken: (state, action) => {
+      state.token = action.payload;
+      saveToken(action.payload); // Save token securely
     },
     logout: () => {
-      localStorage.removeItem("token"); // Clear localStorage
-      localStorage.removeItem("persist:root"); // Clear sessionStorage
-      // Reset state to initial state
-      return { otpDetails: null, loader: false, userDetails: null };
+      removeToken(); // Clear secure token
+      return { otpDetails: null, loader: false, userDetails: null, token: null };
     },
   },
-  extraReducers(builder:any) {
+  extraReducers: (builder: any) => {
     builder
-     
-
-      .addCase(getLoginOTP.fulfilled, (state:any, action:any) => {
+      .addCase(getLoginOTP.fulfilled, (state: any, action: any) => {
         state.otpDetails = action.payload;
         state.loader = false;
       })
-      .addCase(getLoginOTP.rejected, (state:any, action:any) => {
+      .addCase(getLoginOTP.rejected, (state: any) => {
         state.otpDetails = null;
         state.loader = false;
       })
-      .addCase(getLoginOTP.pending, (state:any, action:any) => {
+      .addCase(getLoginOTP.pending, (state: any) => {
         state.loader = true;
-      })
-
-
+      });
   },
 });
 
-export const {
-  resetOTP,setDetails,logout
-} = authSlice.actions;
-
+export const { resetOTP, setDetails, setToken, logout } = authSlice.actions;
 export default authSlice.reducer;
