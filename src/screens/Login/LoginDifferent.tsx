@@ -22,9 +22,7 @@ export const LoginDifferent = ({navigation}: any) => {
       } catch (error) {
         Alert.alert('Failed to send OTP. Please try again.');
       }
-    } else {
-      Alert.alert('Please enter a valid phone number');
-    }
+    } 
   };
 
   return (
