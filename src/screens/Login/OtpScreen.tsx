@@ -24,7 +24,7 @@ export const OtpScreen = ({navigation}: any) => {
         {/* OTP Input */}
         <OTPInputView
           style={styles.otpInputContainer}
-          pinCount={4}
+          pinCount={6}
           code={otp}
           onCodeChanged={setOtp}
           autoFocusOnLoad
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   },
 
   underlineStyleBase: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: Colors.primary, // Set background to primary color
