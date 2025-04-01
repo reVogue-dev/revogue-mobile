@@ -44,7 +44,7 @@ const ClosetScreen = ({navigation}: any) => {
     setActiveTab(tab);
   };
 
-  const handleDateChange = (event: Event, date?: Date) => {
+  const handleDateChange = (date?: Date) => {
     hideDatePicker();
     if (date) {
       setSelectedDate(date);
