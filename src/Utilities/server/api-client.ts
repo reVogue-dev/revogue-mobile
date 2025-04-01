@@ -1,4 +1,4 @@
-import Snackbar from "react-native-paper";
+
 import { CustomEvents, sendInternalEvent } from "../utilities";
 import { BASE_API_URL } from "../../constants";
 import { ROUTE_LANDING } from "../constants/api-routes";

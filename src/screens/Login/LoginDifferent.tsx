@@ -2,22 +2,27 @@ import React, {useState} from 'react';
 import {View, TouchableOpacity, StyleSheet, Text, Alert} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import Colors from '../../Utilities/constants/colors';
+import { useDispatch } from 'react-redux';
+import { getLoginOTP } from '../../redux/reducers/auth.slice';
 
 export const LoginDifferent = ({navigation}: any) => {
   const [phone, setPhone] = useState('');
-
+  const dispatch = useDispatch();
   const handlePhoneInputChange = (input: string) => {
     setPhone(input); // Update the phone number in state
   };
 
-  const handleNextPress = () => {
+  const handleNextPress = async () => {
     if (phone.trim()) {
-      // If there's a valid phone number entered
-      navigation.navigate('Otp'); // Replace with the actual screen name
-    } else {
-      // Handle invalid input (show an alert or error message)
-      Alert.alert('Please enter a valid phone number');
-    }
+      try {
+        const response = await dispatch(getLoginOTP({ mobileNumber: phone })).unwrap();
+        if (response) {
+          navigation.navigate('Otp', { mobileNumber: phone }); // Navigate with mobile number
+        }
+      } catch (error) {
+        Alert.alert('Failed to send OTP. Please try again.');
+      }
+    } 
   };
 
   return (
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
     color: Colors.placeholder,
     paddingVertical: 12,
     fontSize: 10,
-    fontWeight: 700,
+    fontWeight: '700',
   },
 
   phone: {

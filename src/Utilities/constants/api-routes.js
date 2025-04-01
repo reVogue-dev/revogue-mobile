@@ -15,7 +15,5 @@ export const ROUTE_ONBOARDING_PROFESSION = 'Profession';
 export const ROUTE_ONBOARDING_ACCOUNT = 'Account';
 
 // Api Routes
-export const API_LOGIN = '/auth/login';
-export const API_ONBOARD_USER = '/onboarding/add';
-export const API_GET_ONBOARD_USER = '/onboarding/get';
-export const API_REGISTER = '/auth/register';
+export const API_OTP_GENERATE = '/otp/generate';
+
