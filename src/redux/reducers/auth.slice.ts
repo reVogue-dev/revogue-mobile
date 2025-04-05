@@ -1,28 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { APIClient } from "../../Utilities/server/api-client";
-import { API_OTP_GENERATE } from "../../Utilities/constants/api-routes";
-import * as Keychain from 'react-native-keychain';
+import { API_OTP_GENERATE, API_OTP_VALIDATE } from "../../Utilities/constants/api-routes";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const config = {
   name: "auth",
 };
 
-// Function to save token securely
-const saveToken = async (token: string) => {
-  await Keychain.setGenericPassword("authToken", token);
-};
-
-
-
-// Function to remove token securely
-const removeToken = async () => {
-  await Keychain.resetGenericPassword();
-};
 
 export const getLoginOTP: any = createAsyncThunk(
   `${config.name}/getLoginOTP`,
   async (params: any) => {
     const response = await APIClient.post(API_OTP_GENERATE, { params });
+    return response.data.data;
+  }
+);
+
+export const validateOTP: any = createAsyncThunk(
+  `${config.name}/validateOTP`,
+  async (params: any) => {
+    const response = await APIClient.post(API_OTP_VALIDATE, { params });
     return response.data.data;
   }
 );
@@ -42,12 +39,9 @@ export const authSlice = createSlice({
     setDetails: (state, action) => {
       state.userDetails = action.payload;
     },
-    setToken: (state, action) => {
-      state.token = action.payload;
-      saveToken(action.payload); // Save token securely
-    },
+   
     logout: () => {
-      removeToken(); // Clear secure token
+
       return { otpDetails: null, loader: false, userDetails: null, token: null };
     },
   },
@@ -63,9 +57,23 @@ export const authSlice = createSlice({
       })
       .addCase(getLoginOTP.pending, (state: any) => {
         state.loader = true;
+      })
+
+
+      .addCase(validateOTP.fulfilled, (state: any, action: any) => {
+        state.userDetails = action.payload;
+        state.loader = false;
+         AsyncStorage.setItem('token', action.payload.token);
+      })
+      .addCase(validateOTP.rejected, (state: any) => {
+        state.otpDetails = null;
+        state.loader = false;
+      })
+      .addCase(validateOTP.pending, (state: any) => {
+        state.loader = true;
       });
   },
 });
 
-export const { resetOTP, setDetails, setToken, logout } = authSlice.actions;
+export const { resetOTP, setDetails,  logout } = authSlice.actions;
 export default authSlice.reducer;
