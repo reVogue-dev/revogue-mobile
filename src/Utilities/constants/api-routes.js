@@ -16,4 +16,5 @@ export const ROUTE_ONBOARDING_ACCOUNT = 'Account';
 
 // Api Routes
 export const API_OTP_GENERATE = '/otp/generate';
+export const API_OTP_VALIDATE = '/otp/validate';
 

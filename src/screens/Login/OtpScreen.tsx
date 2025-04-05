@@ -1,16 +1,38 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Text, Alert} from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import Colors from '../../Utilities/constants/colors';
 import BottomButton from '../../components/Common/BottomButton';
+import { getLoginOTP } from '../../redux/reducers/auth.slice';
+import { useDispatch } from 'react-redux';
 
-export const OtpScreen = ({navigation}: any) => {
+export const OtpScreen = ({route}: any) => {
   const [otp, setOtp] = useState('');
+  const { mobileNumber } = route.params;
+const dispatch = useDispatch();
 
-  const handleNextPress = () => {
+
+
+  const handleNextPress = (code:any) => {
     // Add OTP validation logic or proceed to the next screen
-    console.log('OTP Entered:', otp);
-    navigation.navigate('Onboarding');
+    console.log('OTP Entered:', code);
+    // navigation.navigate('Onboarding');
+  };
+
+
+  const handleResendPress = async () => {
+  
+     
+        const response = await dispatch(getLoginOTP({ mobileNumber: mobileNumber }))
+  
+        // Check if the HTTP response status code is 200
+        if (response.ok && response.status === 200) {
+          Alert.alert('OTP Sent Successfully');
+        } else {
+          Alert.alert('OTP request was unsuccessful. Please check your number and try again.');
+        }
+     
+    
   };
 
   return (
@@ -18,26 +40,26 @@ export const OtpScreen = ({navigation}: any) => {
       <View style={styles.topContainer}>
         <Text style={styles.text}>Verify Phone</Text>
         <Text style={styles.accountText}>
-          Code has been sent to your +91 65849741225
+          Code has been sent to your +91 {mobileNumber}
         </Text>
 
         {/* OTP Input */}
         <OTPInputView
           style={styles.otpInputContainer}
-          pinCount={4}
+          pinCount={6}
           code={otp}
           onCodeChanged={setOtp}
           autoFocusOnLoad
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
-          onCodeFilled={code => {
-            console.log(`Code is ${code}, you are good to go!`);
+          onCodeFilled={(code:any) => {
+            handleNextPress(code)
           }}
         />
 
         <View style={styles.subtextWrapper}>
           <Text style={styles.question}>Didn’t get OTP Code?</Text>
-          <Text style={styles.resendCode}>Resend Code</Text>
+          <Text style={styles.resendCode} onPress={()=>handleResendPress()}>Resend Code</Text>
         </View>
       </View>
 
@@ -49,7 +71,7 @@ export const OtpScreen = ({navigation}: any) => {
         </TouchableOpacity>
       </View> */}
 
-      <BottomButton buttonText="Next" onPress={handleNextPress} />
+      <BottomButton buttonText="Next" onPress={()=>handleNextPress(otp)} />
     </View>
   );
 };
@@ -102,8 +124,8 @@ const styles = StyleSheet.create({
   },
 
   underlineStyleBase: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: Colors.primary, // Set background to primary color

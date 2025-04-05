@@ -1,28 +1,43 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity, StyleSheet, Text, Alert} from 'react-native';
-import {TextInput} from 'react-native-paper';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { TextInput, Snackbar } from 'react-native-paper';
 import Colors from '../../Utilities/constants/colors';
 import { useDispatch } from 'react-redux';
 import { getLoginOTP } from '../../redux/reducers/auth.slice';
 
-export const LoginDifferent = ({navigation}: any) => {
+export const LoginDifferent = ({ navigation }: any) => {
   const [phone, setPhone] = useState('');
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const dispatch = useDispatch();
+
   const handlePhoneInputChange = (input: string) => {
     setPhone(input); // Update the phone number in state
   };
 
   const handleNextPress = async () => {
-    if (phone.trim()) {
+    if (phone.length < 10) {
+      setSnackbarMessage('Please enter a valid phone number.');
+      setSnackbarVisible(true);
+    } else {
       try {
-        const response = await dispatch(getLoginOTP({ mobileNumber: phone })).unwrap();
-        if (response) {
-          navigation.navigate('Otp', { mobileNumber: phone }); // Navigate with mobile number
+        const response = await dispatch(getLoginOTP({ mobileNumber: phone }));
+        console.log('Response:', response);
+        if ( response.status === 200) {
+          navigation.navigate('Otp', { mobileNumber: phone });
+        } else {
+          setSnackbarMessage('OTP request was unsuccessful. Please check your number and try again.');
+          setSnackbarVisible(true);
         }
       } catch (error) {
-        Alert.alert('Failed to send OTP. Please try again.');
+        setSnackbarMessage('Failed to send OTP. Please try again.');
+        setSnackbarVisible(true);
       }
-    } 
+    }
+  };
+
+  const onDismissSnackBar = () => {
+    setSnackbarVisible(false);
   };
 
   return (
@@ -32,18 +47,17 @@ export const LoginDifferent = ({navigation}: any) => {
         <Text style={styles.accountText}>Create your account</Text>
         <Text style={styles.phone}>Enter your phone number</Text>
 
-        {/* Country code and phone number input */}
         <View style={styles.inputContainer}>
           <TextInput
             value="+91"
-            editable={false} // Make this part non-editable
-            style={[styles.countryCodeInput]}
+            editable={false}
+            style={styles.countryCodeInput}
             mode="flat"
             theme={{
               colors: {
                 primary: Colors.primary,
                 placeholder: Colors.placeholder,
-                text: Colors.primary, // Ensure text color is primary
+                text: Colors.primary,
               },
             }}
           />
@@ -52,13 +66,13 @@ export const LoginDifferent = ({navigation}: any) => {
             onChangeText={handlePhoneInputChange}
             keyboardType="phone-pad"
             maxLength={10}
-            style={[styles.phoneNumberInput]} // No need to specify color in style here, since it's handled by theme
+            style={styles.phoneNumberInput}
             mode="flat"
             theme={{
               colors: {
                 primary: Colors.primary,
                 placeholder: Colors.placeholder,
-                text: Colors.primary, // Ensure text color is primary
+                text: Colors.primary,
               },
             }}
           />
@@ -68,10 +82,19 @@ export const LoginDifferent = ({navigation}: any) => {
       <View style={styles.bottomContainer}>
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={handleNextPress} // Handle the button press
+          onPress={handleNextPress}
         >
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
+      </View>
+      <View style={styles.bottomContainer}>
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={onDismissSnackBar}
+        duration={3000} // How long to show the snackbar
+      >
+        {snackbarMessage}
+      </Snackbar>
       </View>
     </View>
   );
